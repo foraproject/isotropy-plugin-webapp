@@ -14,11 +14,7 @@ type WebAppType = {
     path: string
 };
 
-type IsotropyConfigType = {
-    dir: string,
-    port: number,
-    koa: KoaAppType
-};
+type WebAppConfigType = {}
 
 
 const getDefaultValues = function(val: Object = {}) : WebAppType {
@@ -33,7 +29,7 @@ const getDefaultValues = function(val: Object = {}) : WebAppType {
 };
 
 
-const setup = async function(app: WebAppType, server: KoaAppType, isotropyConfig: IsotropyConfigType) : Promise {
+const setup = async function(app: WebAppType, server: KoaAppType, config: WebAppConfigType) : Promise {
     const router = new Router();
     const routes = [].concat(app.module.routes);
     router.add(routes);
