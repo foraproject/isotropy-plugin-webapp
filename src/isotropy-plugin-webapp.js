@@ -1,7 +1,7 @@
 /* @flow */
 import { KoaContextType, KoaHandlerType } from "koa";
 import type KoaAppType from "koa";
-import { HttpMethodRouteArgsType, HttpMethodRouteOptionsType, AddRouteArgsType } from "isotropy-router";
+import type { HttpMethodRouteArgsType } from "isotropy-router";
 import Router from "isotropy-router";
 
 type ModuleType = {
