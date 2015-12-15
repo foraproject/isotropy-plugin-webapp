@@ -1,6 +1,5 @@
 /* @flow */
-import { KoaContextType, KoaHandlerType } from "koa";
-import type KoaAppType from "koa";
+import type { KoaType, KoaContextType, KoaHandlerType } from "./flow/koa-types";
 import type { HttpMethodRouteArgsType } from "isotropy-router";
 import Router from "isotropy-router";
 
@@ -29,7 +28,7 @@ const getDefaultValues = function(val: Object = {}) : WebAppType {
 };
 
 
-const setup = async function(app: WebAppType, server: KoaAppType, config: WebAppConfigType) : Promise {
+const setup = async function(app: WebAppType, server: KoaType, config: WebAppConfigType) : Promise {
     const router = new Router();
     const routes = [].concat(app.module.routes);
     router.add(routes);
