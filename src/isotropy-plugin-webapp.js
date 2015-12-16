@@ -16,7 +16,7 @@ type WebAppType = {
 type WebAppConfigType = {}
 
 
-const getDefaultValues = function(val: Object = {}) : WebAppType {
+const getDefaults = function(val: Object = {}) : WebAppType {
     if (!val.module) {
         val = { module: val }
     }
@@ -37,6 +37,6 @@ const setup = async function(app: WebAppType, server: KoaType, config: WebAppCon
 
 
 export default {
-    getDefaultValues,
+    getDefaults,
     setup
 };
