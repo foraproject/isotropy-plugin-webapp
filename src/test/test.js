@@ -1,33 +1,40 @@
 import __polyfill from "babel-polyfill";
 import should from 'should';
 import http from "http";
-import koa from "koa";
 import querystring from "querystring";
+import Router from "isotropy-router";
+import promisify from "nodefunc-promisify";
 import webappModule from "../isotropy-plugin-webapp";
 
 describe("Isotropy WebApp Module", () => {
 
-  let defaultInstance: KoaAppType;
+  const makeRequest = (host, port, path, method, headers, _postData) => {
+    return new Promise((resolve, reject) => {
+      const postData = (typeof _postData === "string") ? _postData : querystring.stringify(_postData);
+      const options = { host, port, path, method, headers };
 
-  const makeRequest = (host, port, path, method, headers, _postData, cb, onErrorCb) => {
-    const postData = (typeof _postData === "string") ? _postData : querystring.stringify(_postData);
-    const options = { host, port, path, method, headers };
-
-    let result = "";
-    const req = http.request(options, function(res) {
-      res.setEncoding('utf8');
-      res.on('data', function(data) { result += data; });
-      res.on('end', function() { cb(result); });
+      let result = "";
+      const req = http.request(options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function(data) { result += data; });
+        res.on('end', function() { resolve({ result, res }); });
+      });
+      req.on('error', function(e) { reject(e); });
+      req.write(postData);
+      req.end();
     });
-    req.on('error', function(e) { onErrorCb(e); });
-    req.write(postData);
-    req.end();
   };
 
+  let server, router;
 
-  before(function() {
-    defaultInstance = new koa();
-    defaultInstance.listen(8080);
+  before(async () => {
+    server = http.createServer((req, res) => router.doRouting(req, res));
+    const listen = promisify(server.listen.bind(server));
+    await listen(0);
+  });
+
+  beforeEach(() => {
+    router = new Router();
   });
 
 
@@ -39,23 +46,17 @@ describe("Isotropy WebApp Module", () => {
   });
 
 
-  it(`Should serve a web app`, () => {
+  it(`Should serve a web app`, async () => {
     const moduleConfig = {
       routes: [
-        { url: "/hello", method: "GET", handler: async (context) => { context.body = "hello, world"; } }
+        { url: "/hello", method: "GET", handler: async (req, res) => res.end("hello, world") }
       ]
     }
     const appConfig = { module: moduleConfig, path: "/" };
     const isotropyConfig = { dir: __dirname };
 
-    const promise = new Promise((resolve, reject) => {
-      webappModule.setup(appConfig, defaultInstance, isotropyConfig).then(() => {
-        makeRequest("localhost", 8080, "/hello", "GET", { 'Content-Type': 'application/x-www-form-urlencoded' }, {}, resolve, reject);
-      }, reject);
-    });
-
-    return promise.then((data) => {
-      data.should.equal("hello, world");
-    });
+    await webappModule.setup(appConfig, router, isotropyConfig);
+    const { result } = await makeRequest("localhost", server.address().port, "/hello", "GET", { 'Content-Type': 'application/x-www-form-urlencoded' }, {});
+    result.should.equal("hello, world");
   });
 });

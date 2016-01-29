@@ -1,7 +1,7 @@
 {
   "author": "Jeswin Kumar <jeswinpk@agilehead.com>",
   "name": "isotropy-plugin-webapp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Web app plugin for Isotropy.",
   "scripts": {
     "test": "mocha dist/test/test.js"
@@ -16,7 +16,6 @@
     "isotropy-router": "*"
   },
   "devDependencies": {
-    "koa": "2.0.0-alpha.3",
     "nodefunc-promisify": "*",
     "babel-polyfill": "*",
     "babel-preset-es2015": "*",
