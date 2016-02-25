@@ -39,7 +39,7 @@ describe("Isotropy WebApp Module", () => {
 
 
   it(`Should get default configuration values`, () => {
-    const config = {};
+    const config = { type: "webapp" };
     const completedConfig = webappModule.getDefaults(config);
     completedConfig.type.should.equal("webapp");
     completedConfig.path.should.equal("/");

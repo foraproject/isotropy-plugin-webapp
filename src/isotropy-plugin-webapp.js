@@ -10,17 +10,17 @@ type WebAppType = {
 };
 
 type getDefaultsParamsType = {
+  type: string,
   routes: Array<HttpMethodRouteArgsType>,
-  type?: string,
   path?: string
 };
 
 type WebAppConfigType = {}
 
-const getDefaults = function(val: getDefaultsParamsType = { routes: [] }) : WebAppType {
+const getDefaults = function(val: getDefaultsParamsType) : WebAppType {
   return {
+    type: val.type,
     routes: val.routes,
-    type: val.type || "webapp",
     path: val.path || "/"
   };
 };
