@@ -13,7 +13,8 @@
   "main": "dist/isotropy-plugin-webapp",
   "license": "MIT",
   "dependencies": {
-    "isotropy-router": "*"
+    "isotropy-router": "*",
+    "isotropy-adapter-webapp": "*"
   },
   "devDependencies": {
     "nodefunc-promisify": "*",

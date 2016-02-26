@@ -50,7 +50,7 @@ describe("Isotropy WebApp Module", () => {
     const routes = [
       { url: "/hello", method: "GET", handler: async (req, res) => res.end("hello, world") }
     ];
-    const appConfig = { routes, path: "/" };
+    const appConfig = { type: "webapp", routes, path: "/" };
     const isotropyConfig = { dir: __dirname };
 
     await webappModule.setup(appConfig, router, isotropyConfig);

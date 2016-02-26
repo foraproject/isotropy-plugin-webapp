@@ -1,12 +1,13 @@
 [include]
 
 [libs]
-interfaces/
 
 [options]
+unsafe.enable_getters_and_setters=true
 
 [ignore]
 .*/coverage/.*
 .*/scripts/.*
 .*/node_modules/babel-.*/.*
 .*/node_modules/babylon/.*
+.*/node_modules/json5/.*
