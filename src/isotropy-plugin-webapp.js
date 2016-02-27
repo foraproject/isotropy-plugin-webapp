@@ -10,7 +10,8 @@ type WebAppType = {
   path: string,
   toHtml?: (html: string, props?: Object) => string,
   elementSelector: string,
-  onRender?: (html: string) => void
+  onRender?: (html: string) => void,
+  onError?: (req: IncomingMessage, res: ServerResponse, e: any) => void
 };
 
 type getDefaultsParamsType = {
@@ -19,7 +20,8 @@ type getDefaultsParamsType = {
   path?: string,
   toHtml?: (html: string, props?: Object) => string,
   elementSelector?: string,
-  onRender?: (html: string) => void
+  onRender?: (html: string) => void,
+  onError?: (req: IncomingMessage, res: ServerResponse, e: any) => void
 };
 
 type WebAppConfigType = {}
@@ -31,7 +33,8 @@ const getDefaults = function(val: getDefaultsParamsType) : WebAppType {
     path: val.path || "/",
     toHtml: val.toHtml || ((html) => html),
     elementSelector: val.elementSelector || "#isotropy-container",
-    onRender: val.onRender
+    onRender: val.onRender,
+    onError: val.onError
   };
 };
 
