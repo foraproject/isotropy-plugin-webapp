@@ -63,6 +63,7 @@ const setup = async function(appConfig: WebAppType, router: Router, config: WebA
 
 
 export default {
+  name: "webapp",
   getDefaults,
   setup
 };

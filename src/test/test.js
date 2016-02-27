@@ -37,6 +37,10 @@ describe("Isotropy WebApp Module", () => {
     router = new Router();
   });
 
+  it(`Name should be webapp`, () => {
+    webappModule.name.should.equal("webapp");
+  });
+
 
   it(`Should get default configuration values`, () => {
     const config = { type: "webapp" };
