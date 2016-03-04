@@ -1,7 +1,7 @@
 /* @flow */
 import type { HttpMethodRouteArgsType } from "isotropy-router";
 import Router from "isotropy-router";
-import type { IncomingMessage, ServerResponse } from "./flow/http";
+import type { ProcessedIncomingMessage, ServerResponse } from "isotropy-interfaces/node/http";
 import webappAdapter from "isotropy-adapter-webapp";
 
 type WebAppType = {
@@ -11,7 +11,7 @@ type WebAppType = {
   toHtml?: (html: string, props?: Object) => string,
   elementSelector: string,
   onRender?: (html: string) => void,
-  onError?: (req: IncomingMessage, res: ServerResponse, e: any) => void
+  onError?: (req: ProcessedIncomingMessage, res: ServerResponse, e: any) => void
 };
 
 type getDefaultsParamsType = {
@@ -21,7 +21,7 @@ type getDefaultsParamsType = {
   toHtml?: (html: string, props?: Object) => string,
   elementSelector?: string,
   onRender?: (html: string) => void,
-  onError?: (req: IncomingMessage, res: ServerResponse, e: any) => void
+  onError?: (req: ProcessedIncomingMessage, res: ServerResponse, e: any) => void
 };
 
 type WebAppConfigType = {}
@@ -46,7 +46,7 @@ const setup = async function(appConfig: WebAppType, router: Router, config: WebA
         type: "pattern",
         method: route.method,
         url: route.url,
-        handler: async (req: IncomingMessage, res: ServerResponse, args: Object) => {
+        handler: async (req: ProcessedIncomingMessage, res: ServerResponse, args: Object) => {
           await webappAdapter.render({
             req,
             res,
